@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost';
 $usuario = 'mysql';
-$senha = 'suaSenha'; 
-$banco = 'suaBase';
+$senha = ''; 
+$banco = 'test';
 
 $conexao = new mysqli($host, $usuario, $senha, $banco);
 
