@@ -17,7 +17,7 @@
 					<img src="images/img-01.png" alt="IMG">
 				</div>
 
-				<form class="login100-form validate-form">
+				<form method="post" class="login100-form validate-form" action="/autenticacao.php">
 					<span class="login100-form-title">
 						Login
 					</span>
@@ -31,7 +31,7 @@
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
-						<input class="input100" type="password" name="pass" placeholder="Senha">
+						<input class="input100" type="password" name="senha" placeholder="Senha">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
@@ -39,7 +39,7 @@
 					</div>
 					
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
+						<button class="login100-form-btn" type="submit">
 							Login
 						</button>
 					</div>

@@ -1,18 +1,29 @@
 <?php
 include('conexao.php');
 
-// Recebe os dados do formulário
-$nome = $_POST['nome'];
-$email = $_Post['email'];
-$senha = password_hash($_POST['senha'], PASSWORD_DEFAULT); // Criptografa a senha
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['senha'])) {
+        $nome = mysqli_real_escape_string($conexao, strip_tags($_POST['nome']));
+        $email = mysqli_real_escape_string($conexao, strip_tags($_POST['email']));
+        $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT); // Criptografar a senha
 
-// Insere os dados na tabela 'usuarios'
-$sql = "INSERT INTO usuarios (nome, email, senha) VALUES ('$nome', '$email', '$senha')";
-$resultado = mysqli_query($conexao, $sql);
+        // Insere os dados na tabela 'usuarios'
+        $sql = "INSERT INTO usuarios (nome, email, senha) VALUES ('$nome', '$email', '$senha')";
+        $resultado = mysqli_query($conexao, $sql);
 
-if ($resultado) {
-    echo "Cadastro realizado com sucesso!";
+        // Verifica se a inserção foi bem-sucedida
+        if ($resultado) {
+            echo "Cadastro realizado com sucesso!";
+        } else {
+            echo "Erro ao cadastrar. Tente novamente.";
+        }
+    } else {
+        echo "Por favor, preencha todos os campos do formulário.";
+    }
 } else {
-    echo "Erro ao cadastrar. Tente novamente.";
+    header("Location: cadastro.html");
+    exit;
 }
+
+mysqli_close($conexao);
 ?>

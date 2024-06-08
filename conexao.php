@@ -1,8 +1,13 @@
 <?php
-// Conexão com o banco de dados
-$host = "localhost";
-$usuario = "seu_usuario";
-$senha = "sua_senha";
-$banco = "seu_banco";
-$conexao = mysqli_connect($host, $usuario, $senha, $banco);
+$host = 'localhost';
+$usuario = 'mysql';
+$senha = 'suaSenha'; 
+$banco = 'suaBase';
+
+$conexao = new mysqli($host, $usuario, $senha, $banco);
+
+// Verifica se ocorreu algum erro na conexão
+if ($conexao->connect_error) {
+    die("Erro ao conectar ao banco de dados: " . $conexao->connect_error);
+} 
 ?>

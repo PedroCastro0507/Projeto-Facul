@@ -2,17 +2,37 @@
 include('conexao.php');
 // Recebe os dados do formulário
 $email = $_POST['email'];
-$senha = $_POST['senha'];
+$pass = $_POST['senha'];
 
 // Consulta SQL para verificar se o usuário existe
-$sql = "SELECT * FROM usuarios WHERE login = '$login'";
+$sql = "SELECT * FROM usuarios WHERE email = '$email'";
 $resultado = mysqli_query($conexao, $sql);
-$linha = mysqli_fetch_assoc($resultado);
+if ($resultado) {
+    // Verifica se foi retornado algum resultado
+    if (mysqli_num_rows($resultado) > 0) {
+        $linha = mysqli_fetch_assoc($resultado);
+        // Verifica se a senha está correta
+        if (password_verify($pass, $linha['senha'])) {
+            // Define as variáveis de sessão
+            session_start();
+            $_SESSION['usuario_id'] = $linha['id'];
+            $_SESSION['usuario_nome'] = $linha['nome'];
+            $_SESSION['usuario_email'] = $linha['email'];
 
-if ($linha && password_verify($senha, $linha['senha'])) {
-    echo "Login realizado com sucesso!";
-    // Aqui você pode redirecionar o usuário para a página principal
+            header('Location: Login/index.php?login_sucesso=true');
+            exit;
+        } else {
+            echo"erro";
+            header('Location: Login/index.php?login_erro=true');
+            exit;
+        }
+    } else {
+        header('Location: /index.php?login_erro=true');
+        exit;
+    }
 } else {
-    echo "Usuário ou senha incorretos. Tente novamente.";
+    echo "Erro ao executar a consulta: " . mysqli_error($conexao);
 }
+
+mysqli_close($conexao);
 ?>
