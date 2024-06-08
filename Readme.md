@@ -13,11 +13,11 @@
 - [ ] Sistema de Avaliação ou Classificação
 
 ### Administrador
-- [ ] Dashboard do Administrador - Página Inicial
-- [ ] Dashboard do Administrador - Página para Visualização de Conteúdo Disponível
-  - [ ] Opções de Editar/Remover Conteúdo
-- [ ] Dashboard do Administrador - Página para Visualização de Conteúdo Aguardando Avaliação
-  - [ ] Opções de Criar/Enviar Conteúdo para Aprovação
+- [ ] Dashboard do Administrador - Página Inicial 🧑‍💻 Realizando -- José
+- [ ] Dashboard do Administrador - Página para Visualização de Conteúdo Disponível 🧑‍💻 Realizando -- José
+  - [ ] Opções de Editar/Remover Conteúdo 🧑‍💻 Realizando -- José
+- [ ] Dashboard do Administrador - Página para Visualização de Conteúdo Aguardando Avaliação 🧑‍💻 Realizando -- José
+  - [ ] Opções de Criar/Enviar Conteúdo para Aprovação 🧑‍💻 Realizando -- José
 - [ ] Sistema de Notificação para Administradores
 - [ ] Funcionalidades de Backup e Restauração
 
