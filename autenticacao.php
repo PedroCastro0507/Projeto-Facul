@@ -15,11 +15,11 @@ if ($resultado) {
         if (password_verify($pass, $linha['senha'])) {
             // Define as variáveis de sessão
             session_start();
-            $_SESSION['usuario_id'] = $linha['id'];
+            $_SESSION['usuario_id'] = $linha['id']; 
             $_SESSION['usuario_nome'] = $linha['nome'];
             $_SESSION['usuario_email'] = $linha['email'];
 
-            header('Location: Login/index.php?login_sucesso=true');
+            header('Location: Admin/dashboard/lista-recursos');
             exit;
         } else {
             echo"erro";
@@ -27,7 +27,7 @@ if ($resultado) {
             exit;
         }
     } else {
-        header('Location: /index.php?login_erro=true');
+        header('Location: Login/index.php?login_erro=true');
         exit;
     }
 } else {

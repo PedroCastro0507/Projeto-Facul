@@ -22,6 +22,20 @@
 						Login
 					</span>
 
+					<?php if(isset($_GET['login_erro']) && $_GET['login_erro'] == 'true'): ?>
+                        <div class="alert alert-danger" role="alert">
+                            Email ou senha incorretos. Por favor, tente novamente.
+                        </div>
+						<br>
+                    <?php endif; ?>
+
+					<?php if(isset($_GET['new_account']) && $_GET['new_account'] == 'true'): ?>
+                        <div class="alert alert-danger" role="alert">
+							Cadastro realizado com sucesso!
+                        </div>
+						<br>
+                    <?php endif; ?>
+
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
 						<input class="input100" type="text" name="email" placeholder="Email">
 						<span class="focus-input100"></span>
@@ -45,7 +59,7 @@
 					</div>
 
 					<div class="text-center p-t-136">
-						<a class="txt2" href="/Cadastro/index.html">
+						<a class="txt2" href="/Cadastro/">
 							Crie sua Conta
 							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
 						</a>

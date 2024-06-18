@@ -1,4 +1,10 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+?>
+
+<?php
 include($_SERVER['DOCUMENT_ROOT'] . '/conexao.php');
 
 // Verifica se o ID do recurso foi passado pela URL
@@ -35,35 +41,39 @@ if(isset($_POST['submit'])) {
     $status = $_POST['status'];
 
     // Verifica se foi enviado um novo arquivo de imagem
-    if(isset($_FILES['nova_imagem'])) {
+    if(isset($_FILES['nova_imagem']) && $_FILES['nova_imagem']['error'] == UPLOAD_ERR_OK) {
         $nova_imagem_nome = $_FILES['nova_imagem']['name'];
         $nova_imagem_tmp = $_FILES['nova_imagem']['tmp_name'];
-        $nova_imagem_destino = $_SERVER['DOCUMENT_ROOT'] . '/uploads/images/' . $nova_imagem_nome;
+        $nova_imagem_destino = $_SERVER['DOCUMENT_ROOT'] .'/uploads/images/' . $nova_imagem_nome;
+        $nova_imagem_destino_db = '/uploads/images/' . $nova_imagem_nome;
 
         // Move o novo arquivo de imagem para o diretório de destino
         if(move_uploaded_file($nova_imagem_tmp, $nova_imagem_destino)) {
             // Atualiza o nome da imagem no banco
-            $sql = "UPDATE recursos SET imagem='$nova_imagem_destino' WHERE id=$id";
+            $sql = "UPDATE recursos SET imagem='$nova_imagem_destino_db' WHERE id=$id";
             $conexao->query($sql);
-            // Atualiza os outros campos no banco
-            $sql = "UPDATE recursos SET titulo='$titulo', descricao='$descricao', tipo='$tipo', status='$status' WHERE id=$id";
-            $conexao->query($sql);
-
-            // Redireciona de volta para a página de listagem
-            header("Location: index.php");
-            exit();
         } else {
             echo "Erro ao fazer o upload da nova imagem.";
         }
-    } else {
-        // Se nenhum novo arquivo de imagem foi enviado, atualiza apenas os outros campos no banco de dados
-        $sql = "UPDATE recursos SET titulo='$titulo', descricao='$descricao', tipo='$tipo', status='$status' WHERE id=$id";
-        $conexao->query($sql);
-
-        // Redireciona de volta para a página de listagem após a edição
-        header("Location: index.php");
-        exit();
     }
+
+    // Atualiza os outros campos no banco
+    $sql = "UPDATE recursos SET titulo='$titulo', descricao='$descricao', tipo='$tipo', status='$status' WHERE id=$id";
+    $conexao->query($sql);
+
+    // Redireciona de volta para a página de listagem
+    header("Location: index.php");
+    exit();
+}
+
+// Verifica se a ação de deletar foi enviada
+if(isset($_POST['delete'])) {
+    $sql = "DELETE FROM recursos WHERE id=$id";
+    $conexao->query($sql);
+
+    // Redireciona de volta para a página de listagem
+    header("Location: index.php");
+    exit();
 }
 ?>
 
@@ -117,6 +127,7 @@ if(isset($_POST['submit'])) {
             </div>
             <button type="submit" name="submit" class="btn btn-primary">Salvar Alterações</button>
             <a href="index.php" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" name="delete" class="btn btn-danger">Deletar Recurso</button>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

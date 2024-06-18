@@ -22,7 +22,22 @@
                 <form class="login100-form validate-form" method="POST" action="/cadastro.php">
                     <span class="login100-form-title">
                         Cadastro
-                    </span>
+                    </span> 
+
+
+                    <?php if(isset($_GET['login_error']) && $_GET['login_error'] == 'email'): ?>
+                        <div class="alert alert-danger" role="alert">
+                            Email já cadastrado.
+                        </div>
+						<br>
+                    <?php endif; ?>
+
+                    <?php if(isset($_GET['new_account']) && $_GET['new_account'] == 'false'): ?>
+                        <div class="alert alert-danger" role="alert">
+                            Erro ao cadastrar. Tente novamente
+                        </div>
+						<br>
+                    <?php endif; ?>
 
                     <div class="wrap-input100 validate-input" data-validate="Name is required">
                         <input class="input100" type="text" name="nome" id="nome" placeholder="Nome">
@@ -55,7 +70,7 @@
                     </div>
 
                     <div class="text-center p-t-136">
-                        <a class="txt2" href="../Login/index.html">
+                        <a class="txt2" href="/Login/">
                             Entre com sua Conta
                             <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                         </a>
