@@ -18,6 +18,7 @@ if ($resultado) {
             $_SESSION['usuario_id'] = $linha['id']; 
             $_SESSION['usuario_nome'] = $linha['nome'];
             $_SESSION['usuario_email'] = $linha['email'];
+            $_SESSION['admin'] = $linha['admin'];
 
             header('Location: Admin/dashboard/lista-recursos');
             exit;

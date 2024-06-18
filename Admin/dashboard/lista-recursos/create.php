@@ -1,25 +1,37 @@
 <?php
+session_start();
+
+// Verifica se o usuário está logado
+if (!isset($_SESSION['usuario_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
 // Verifica se o formulário foi enviado
-if(isset($_POST['submit'])) {
+if (isset($_POST['submit'])) {
     include($_SERVER['DOCUMENT_ROOT'] . '/conexao.php');
 
-    // Obtm os dados do formulário
+    // Obtém os dados do formulário
     $titulo = $_POST['titulo'];
     $descricao = $_POST['descricao'];
     $tipo = $_POST['tipo'];
 
-    // Verifica se a imagem foi enviada imagem
-    if(isset($_FILES['imagem'])) {
+    // Obtém o ID do usuário da sessão
+    $id_usuario = $_SESSION['usuario_id'];
+
+    // Verifica se a imagem foi enviada
+    if (isset($_FILES['imagem'])) {
         $imagem_nome = $_FILES['imagem']['name'];
         $imagem_tmp = $_FILES['imagem']['tmp_name'];
         $imagem_destino = $_SERVER['DOCUMENT_ROOT'] . '/uploads/images/' . $imagem_nome;
         $imagem_dir = '/uploads/images/' . $imagem_nome;
 
-        // move o arquivo de imagem para o diretório de destino
-        if(move_uploaded_file($imagem_tmp, $imagem_destino)) {
-            // grava o novo recurso no banco de dados
-            $sql = "INSERT INTO recursos (titulo, descricao, tipo, imagem) VALUES ('$titulo', '$descricao', '$tipo', '$imagem_dir')";
-            if($conexao->query($sql) === TRUE) {
+        // Move o arquivo de imagem para o diretório de destino
+        if (move_uploaded_file($imagem_tmp, $imagem_destino)) {
+            // Grava o novo recurso no banco de dados com status 'em_triagem'
+            $sql = "INSERT INTO recursos (titulo, descricao, tipo, imagem, status, id_usuario) 
+                    VALUES ('$titulo', '$descricao', '$tipo', '$imagem_dir', 'em_triagem', $id_usuario)";
+            if ($conexao->query($sql) === TRUE) {
                 // Redireciona de volta para a página de listagem
                 header("Location: index.php");
                 exit();
@@ -63,7 +75,7 @@ if(isset($_POST['submit'])) {
                 <select class="form-select" id="tipo" name="tipo">
                     <option value="evento">Evento</option>
                     <option value="atlética">Atlética</option>
-                    <option value="outro" selected>Outro</option>
+                    <option value="comodidade" selected>Comodidade</option>
                 </select>
             </div>
             <div class="mb-3">
