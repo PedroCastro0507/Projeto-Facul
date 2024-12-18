@@ -17,10 +17,24 @@
 					<img src="images/img-01.png" alt="IMG">
 				</div>
 
-				<form class="login100-form validate-form">
+				<form method="post" class="login100-form validate-form" action="/autenticacao.php">
 					<span class="login100-form-title">
 						Login
 					</span>
+
+					<?php if(isset($_GET['login_erro']) && $_GET['login_erro'] == 'true'): ?>
+                        <div class="alert alert-danger" role="alert">
+                            Email ou senha incorretos. Por favor, tente novamente.
+                        </div>
+						<br>
+                    <?php endif; ?>
+
+					<?php if(isset($_GET['new_account']) && $_GET['new_account'] == 'true'): ?>
+                        <div class="alert alert-danger" role="alert">
+							Cadastro realizado com sucesso!
+                        </div>
+						<br>
+                    <?php endif; ?>
 
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
 						<input class="input100" type="text" name="email" placeholder="Email">
@@ -31,7 +45,7 @@
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
-						<input class="input100" type="password" name="pass" placeholder="Senha">
+						<input class="input100" type="password" name="senha" placeholder="Senha">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
@@ -39,13 +53,13 @@
 					</div>
 					
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
+						<button class="login100-form-btn" type="submit">
 							Login
 						</button>
 					</div>
 
 					<div class="text-center p-t-136">
-						<a class="txt2" href="/Cadastro/index.html">
+						<a class="txt2" href="/Cadastro/">
 							Crie sua Conta
 							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
 						</a>
